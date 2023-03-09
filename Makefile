@@ -1,9 +1,13 @@
-M=$(PWD)
-AUDIO_ROOT=$(KERNEL_SRC)/$(M)
+M ?= $(PWD)
+AUDIO_ROOT := $(KERNEL_SRC)/$(M)
 
-KBUILD_OPTIONS+=  AUDIO_ROOT=$(AUDIO_ROOT)
+KBUILD_OPTIONS += CONFIG_SND_SOC_KALAMA=m
+KBUILD_OPTIONS += MODNAME=audio_dlkm
+KBUILD_OPTIONS += BOARD_PLATFORM=kalama
 
-all: modules
+KBUILD_OPTIONS +=  AUDIO_ROOT=$(AUDIO_ROOT)
+
+all: modules modules_install
 
 clean:
 	$(MAKE) -C $(KERNEL_SRC) M=$(M) clean
